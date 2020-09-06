@@ -1,0 +1,106 @@
+<!-- buraya sağ tarafta x gelecek -->
+<h2 mat-dialog-title>New Consulatant</h2>
+<div class="row">
+    <form mat-dialog-content [formGroup]="addConsultantForm" *ngIf="this.addConsultantForm">
+        <h3 style="text-align: center;">Photo Upload</h3>
+        <div class="upload">
+            <app-add-image (res)="addItem($event)"></app-add-image>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="First Name" formControlName="firstName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="Last Name" formControlName="lastName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="Identity No" formControlName="identityNo">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput type="email" placeholder="E-Mail" formControlName="email">
+            </mat-form-field>
+            <div *ngIf="addConsultantForm.get('email').invalid && (addConsultantForm.get('email').dirty || addConsultantForm.get('email').touched)"
+                class="alert alert-danger">
+                <div *ngIf="addConsultantForm.get('email').errors.email">
+                    This Email Incorrect
+                </div>
+                <div *ngIf="addConsultantForm.get('email').errors.required">
+                    E-Mail is Required.
+                </div>
+            </div>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput type="password" placeholder="Password" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input id="confirmPass" required matInput type="password" placeholder="Confirm Password"
+                    name="confirmPass" formControlName="confirmPass">
+            </mat-form-field>
+            <div *ngIf="addConsultantForm.get('confirmPass').invalid && (addConsultantForm.get('confirmPass').dirty || addConsultantForm.get('confirmPass').touched)"
+                class="alert alert-danger">
+                <div *ngIf="addConsultantForm.get('confirmPass').errors.required">
+                    Confirm Password is Required.
+                </div>
+                <div *ngIf="addConsultantForm.get('confirmPass').errors.isMatching==false">
+                    Password isn't Confirmed
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <ngx-intl-tel-input [inputId]="'adsasd'" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                    [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Turkey" [maxLength]="10"
+                    [tooltipField]="TooltipLabel.Name" [phoneValidation]="true" [separateDialCode]="separateDialCode"
+                    name="phone" formControlName="phone">
+                </ngx-intl-tel-input>
+            </div>
+            <div *ngIf="addConsultantForm.get('phone').invalid && (addConsultantForm.get('phone').dirty || addConsultantForm.get('phone').touched)"
+                class="alert alert-danger">
+                <div *ngIf="addConsultantForm.get('phone').errors.required">
+                    Mobile Phone Number is Required.
+                </div>
+                <div *ngIf="addConsultantForm.get('phone').errors.validatePhoneNumber">
+                    This Phone Number Incorrect
+                </div>
+            </div>
+        </div>
+        <div>
+            <mat-form-field>
+                <textarea required matInput placeholder="Address" formControlName="address" name="address" id="address"
+                    cols="30" rows="5"></textarea>
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="fill">
+            <mat-label> Owned Company</mat-label>
+            <mat-select required [(ngModel)]="selectedOwned" formControlName="ownedCompany">
+                <mat-option mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Worked Company</mat-label>
+                <mat-select required [(ngModel)]="selectedWorked" formControlName="workedCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div>
+    <mat-dialog-actions style="float:right;">
+        <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button [disabled]="addConsultantForm.invalid" class="btn btn-sm color-white mat-raised-button mat-primary  "
+            (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

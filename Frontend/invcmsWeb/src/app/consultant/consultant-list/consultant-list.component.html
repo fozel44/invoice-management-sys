@@ -1,0 +1,58 @@
+<h2 class="h2 text-center mt-3">Consultant List</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex flex-row mt-2 my-2">
+                <div class="p-2 ">
+                    <input class="form-control" type="text" placeholder="Search a Consultant" [(ngModel)]="filterText">
+                    <i *ngIf="filterText">
+                        You Searched For <strong>{{filterText}}</strong>
+                    </i>
+                </div>
+                <!-- <div class="ml-auto p-2">
+                    <button class="new-consultant-btn btn btn-xs btn-outline-info" (click)="addConsultant()"
+                        title="New Consultant"><i class="fa fa-user-plus"></i></button>
+                </div> -->
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>Owned Company</th>
+                            <th>Worked Company</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let consultant of consultants|consultantFilter:filterText">
+                            <td>{{consultant.user.firstName}}</td>
+                            <td>{{consultant.user.lastName}}</td>
+                            <td>{{consultant.user.email}}</td>
+                            <td>{{consultant.phone.e164Number}}</td>
+                            <td>{{consultant.address}}</td>
+                            <td>{{consultant.ownedCompany.name}}</td>
+                            <td>{{consultant.workedCompany.name}}</td>
+                            <td>
+
+                                <!-- <button class="edit-button" nz-button nzType="primary"
+                                    *ngIf="this.roleGuard.isUserOrRoles(consultant.user,['ADMIN'])"
+                                    routerLink="/invoice-list/{{consultant.id}}" title="Show Invoices"> <i nz-icon
+                                        nzType="file-search"></i></button> -->
+
+                                <button title="Show Profile" class="edit-button" routerLink="/consultant-profile"
+                                    [queryParams]="{ consultantId: consultant.id }" nz-button nzType="primary"><i
+                                        nz-icon nzType="user"></i></button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

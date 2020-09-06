@@ -1,0 +1,6 @@
+
+[0824/192654.165:ERROR:process_info.cc(359)] UncheckedAllocate
+[0824/192705.449:ERROR:process_info.cc(359)] UncheckedAllocate
+[0824/192714.570:ERROR:process_info.cc(359)] UncheckedAllocate
+[0824/192714.729:ERROR:process_info.cc(359)] UncheckedAllocate
+[0831/043523.951:ERROR:process_info.cc(375)] NtQuerySystemInformation SystemExtendedHandleInformation: Belirtilen bilgi kaydý uzunluðu, belirtilen bilgi sýnýfýnýn gerektirdiði uzunluk ile eþleþmiyor. (0xc0000004)

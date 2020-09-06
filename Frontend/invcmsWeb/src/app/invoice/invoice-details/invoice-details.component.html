@@ -1,0 +1,144 @@
+<div nz-row class="company-row">
+    <div  nz-col nzFlex="2"><button class="edit-button" *ngIf="invoice" [disabled]="!this.roleGuard.isUserOrRoles(this.invoice.consultant.user,['ADMIN'])" nz-button nzType="primary" (click)="editInvoice(invoice)"><i
+                nz-icon nzType="edit"></i>Edit</button>
+    </div>
+    <div nz-col nzFlex="3">
+        <h1>Invoice Details</h1>
+    </div>
+</div>
+<div nz-row class="justify-content-between">
+    <div class="dv" *ngIf="invoice">
+        <table class="">
+            <thead>
+                <tr>
+                    <th class="detail-th">Amount</th>
+                    <th class="detail-th">Tax_Amount</th>
+                    <th class="detail-th">Month</th>
+                    <th class="detail-th">Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td class="detail-td"><span>{{invoice.amount}}</span></td>
+                <td class="detail-td"><span>{{invoice.taxAmount}}</span></td>
+                <td class="detail-td"><span>{{invoice.month}}</span></td>
+                <td class="detail-td"><span>{{invoice.year}}</span></td>
+                <!-- <td class="detail-td"><span><a [href]="invoice.pdf|src|async" target="_blank">pdf</a></span></td>  -->
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="invoice" class="doc-buttons">
+        <a [href]="invoice.pdf|src|async" *ngIf="invoice.pdf" target="_blank"><button nz-button nzType="primary"  ><i style="font-size:20px;" nz-icon nzType="file-pdf" nzTheme="fill"></i>PDF</button></a>
+        <a [href]="invoice.timesheet|src|async" *ngIf="invoice.timesheet" target="_blank"><button nz-button nzType="primary"  ><i style="font-size:20px;" nz-icon nzType="file-excel" nzTheme="fill"></i>Timesheet</button></a>
+
+    </div>
+
+</div>
+<div nz-row [nzGutter]="16" *ngIf="invoice">
+    <div nz-col [nzSpan]="8" *ngIf="invoice.ownerCompany">
+        <div class="logo"><img [src]=" invoice.ownerCompany.logo |src | async " alt="{{invoice.ownerCompany.name}}'s Logo">
+        </div>
+        <div class="detail-name name-button"><button mat-raised-button routerLink="/company-profile"
+                [queryParams]="{ companyId: invoice.ownerCompany.id }">{{invoice.ownerCompany.name}}</button></div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="detail-name">Owner Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name :<span class="tr-company">{{invoice.ownerCompany.name}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>TIN :<span class="tr-company">{{invoice.ownerCompany.taxIdentificationNumber}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tax Office :<span class="tr-company">{{invoice.ownerCompany.taxOffice}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phone :<span class="tr-company">{{invoice.ownerCompany.phone.e164Number}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Address :<span class="tr-company">{{invoice.ownerCompany.address}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div nz-col [nzSpan]="8" *ngIf="invoice.consultant">
+        <div class="logo"><img class="logo-profile" [src]=" invoice.consultant.photo |src | async " alt="{{invoice.consultant.name}}'s Photo">
+        </div>
+        <div class="detail-name name-button"><button mat-raised-button routerLink="/consultant-profile"
+                [queryParams]="{ consultantId: invoice.consultant.id }">{{invoice.consultant.user.firstName}}</button>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="detail-name">Consultant Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name :<span class="tr-company">{{invoice.consultant.user.firstName}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Surname :<span class="tr-company">{{invoice.consultant.user.lastName}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail :<span class="tr-company">{{invoice.consultant.user.email}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phone :<span class="tr-company">{{invoice.consultant.phone.e164Number}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Address :<span class="tr-company">{{invoice.consultant.address}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Owned :<button mat-raised-button routerLink="/company-profile"
+                                [queryParams]="{ companyId: invoice.consultant.ownedCompany.id }"
+                                class="tr-company">{{invoice.consultant.ownedCompany.name}}</button></td>
+                    </tr>
+                    <tr>
+                        <td>Worked :<button mat-raised-button routerLink="/company-profile"
+                                [queryParams]="{ companyId: invoice.consultant.workedCompany.id }"
+                                class="tr-company">{{invoice.consultant.workedCompany.name}}</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div nz-col [nzSpan]="8" *ngIf="invoice.remoteCompany">
+        <div class="logo"><img [src]=" invoice.remoteCompany.logo |src | async " alt="{{invoice.remoteCompany.name}}'s Logo">
+        </div>
+        <div class="detail-name name-button"><button mat-raised-button routerLink="/company-profile"
+                [queryParams]="{ companyId: invoice.remoteCompany.id }">{{invoice.remoteCompany.name}}</button></div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="detail-name">Remote Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name :<span class="tr-company">{{invoice.remoteCompany.name}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>TIN :<span class="tr-company">{{invoice.remoteCompany.taxIdentificationNumber}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Tax Office :<span class="tr-company">{{invoice.remoteCompany.taxOffice}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phone :<span class="tr-company">{{invoice.remoteCompany.phone.e164Number}}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Address :<span class="tr-company">{{invoice.remoteCompany.address}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

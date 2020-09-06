@@ -1,0 +1,70 @@
+<h2 class="h2 text-center mt-3">Invoices</h2>
+<div>
+    <div>
+        <div *ngIf="!doNotListConsultants;then consultantBadges"></div>
+        <ng-template #consultantBadges>
+            <span style="cursor: pointer;" *ngFor="let consultant of consultants" (click)="getInvoices(consultant.id)"
+                class="consultant-buttons badge badge-dark active mr-1 my-2  p-2">{{consultant.user.firstName}}
+                {{consultant.user.lastName}}</span>
+        </ng-template>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex flex-row mt-2 my-2">
+            <div class="p-2 ">
+                <input class="form-control" type="text" placeholder="Search a Invoice" [(ngModel)]="filterText">
+                <i *ngIf="filterText">
+                    You Searched For <strong>{{filterText}}</strong>
+                </i>
+            </div>
+
+        </div>
+        <div class="table responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Consultant Name</th>
+                        <th>Month</th>
+                        <th>Year</th>
+                        <th>Amount</th>
+                        <th>Tax_Amount</th>
+                        <th>Owner Company</th>
+                        <th>Remote Company</th>
+                        <th>Pdf</th>
+                        <th>Timesheet</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let invoice of invoices|invoiceFilter:filterText">
+                        <td>{{invoice.consultant.user.firstName}}</td>
+                        <td>{{invoice.month}}</td>
+                        <td>{{invoice.year}}</td>
+                        <td>{{invoice.amount}}</td>
+                        <td>{{invoice.taxAmount}}</td>
+                        <td>{{invoice.ownerCompany.name}}</td>
+                        <td>{{invoice.remoteCompany.name}}</td>
+                        <td class="doc-buttons detail-td"><a [href]="invoice.pdf|src|async" *ngIf="invoice.pdf"
+                                target="_blank"><button title="Show Pdf" nz-button nzType="primary"><i nz-icon nzType="file-pdf"
+                                        nzTheme="fill"></i></button></a></td>
+                        <td class="doc-buttons detail-td"><a [href]="invoice.timesheet|src|async"
+                                *ngIf="invoice.timesheet" target="_blank"><button title="Show Timesheet" nz-button nzType="primary"><i nz-icon
+                                        nzType="file-excel" nzTheme="fill"></i></button></a></td>
+                        <td>
+
+                           
+
+                            <button title="Show Details" class="edit-button" routerLink="/invoice-details"
+                                [queryParams]="{ invoiceId: invoice.id }" nz-button nzType="primary"><i nz-icon
+                                    nzType="profile" ></i></button>
+
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

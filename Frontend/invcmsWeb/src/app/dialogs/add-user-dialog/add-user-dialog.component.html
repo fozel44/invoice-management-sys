@@ -1,0 +1,70 @@
+<!-- buraya sağ tarafta x gelecek -->
+<h2 mat-dialog-title>New User</h2>
+<div class="row">
+    <form mat-dialog-content [formGroup]="addUserForm" *ngIf="this.addUserForm">
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="First Name" formControlName="firstName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="Last Name" formControlName="lastName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput type="email" placeholder="E-Mail" formControlName="email">
+            </mat-form-field>
+            <div *ngIf="addUserForm.get('email').invalid && (addUserForm.get('email').dirty || addUserForm.get('email').touched)"
+                class="alert alert-danger">
+                <div *ngIf="addUserForm.get('email').errors.email">
+                    This Email Incorrect
+                </div>
+                <div *ngIf="addUserForm.get('email').errors.required">
+                    E-Mail is Required.
+                </div>
+            </div>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput type="password" placeholder="Password" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input id="confirmPass" required matInput type="password" placeholder="Confirm Password"
+                    name="confirmPass" formControlName="confirmPass">
+            </mat-form-field>
+            <div *ngIf="addUserForm.get('confirmPass').invalid && (addUserForm.get('confirmPass').dirty || addUserForm.get('confirmPass').touched)"
+                class="alert alert-danger">
+                <div *ngIf="addUserForm.get('confirmPass').errors.required">
+                    Confirm Password is Required.
+                </div>
+                <div *ngIf="addUserForm.get('confirmPass').errors.isMatching==false">
+                    Password isn't Confirmed
+                </div>
+            </div>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Roles</mat-label>
+                <mat-select formControlName="roles" multiple>
+                    <mat-option *ngFor="let r of roleList" [value]="r">{{r.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div>
+    <mat-dialog-actions style="float:right;">
+        <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button [disabled]="addUserForm.invalid" class="btn btn-sm color-white mat-raised-button mat-primary  "
+            (click)="save()">Save</button>
+    </mat-dialog-actions>
+
+
+
+
+
+</div>

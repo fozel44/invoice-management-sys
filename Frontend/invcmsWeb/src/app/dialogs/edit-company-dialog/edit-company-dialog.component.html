@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>Edit the Company</h2>
+<div class="row">
+    <form mat-dialog-content [formGroup]="editCompanyForm" *ngIf="this.editCompanyForm">
+        <h3 style="text-align: center;">Change Logo</h3>
+        <div class="upload">   
+            <app-add-image (res)="addItem($event)"></app-add-image>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Tax Identification Number" formControlName="taxIdentificationNumber">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Tax Office" formControlName="taxOffice">
+            </mat-form-field>
+        </div>
+        <div>
+            <ngx-intl-tel-input [inputId]="'adsasd'" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.Turkey" [maxLength]="15" [tooltipField]="TooltipLabel.Name"
+                [phoneValidation]="true" [separateDialCode]="separateDialCode" name="phone" formControlName="phone">
+            </ngx-intl-tel-input>
+        </div>
+        <div *ngIf="editCompanyForm.get('phone').invalid && (editCompanyForm.get('phone').dirty || editCompanyForm.get('phone').touched)"
+            class="alert alert-danger">
+            <div *ngIf="editCompanyForm.get('phone').errors.required">
+                Mobile Phone Number is Required.
+            </div>
+            <div *ngIf="editCompanyForm.get('phone').errors.validatePhoneNumber">
+                This Phone Number Incorrect
+            </div>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Address" formControlName="address">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Description" formControlName="description">
+            </mat-form-field>
+        </div>
+
+
+    </form>
+</div>
+<div>
+    <mat-dialog-actions>
+        <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button *ngIf="this.editCompanyForm" [disabled]="this.editCompanyForm.invalid"
+            class="btn btn-sm color-white mat-raised-button mat-primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

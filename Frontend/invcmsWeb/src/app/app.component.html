@@ -1,0 +1,124 @@
+<nz-layout class="app-layout">
+  <nz-sider *ngIf="isLoggedIn()" class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a href="/" >
+        <img src="/assets/images/icon.png" alt="logo">
+        <h1 style="font-size:90%;">Invoice Management System</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/welcome">Welcome</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>Monitor</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>Workplace</a>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="isLoggedIn()" nz-submenu nzOpen nzTitle="Forms" nzIcon="form">
+        <ul>
+          <li *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" nz-menu-item nzMatchRouter>
+            <a (click)="addConsultant()">New Consultant</a>
+          </li>
+          <li *ngIf="this.roleGuard.doRolesMatch(['ADMIN','CONSULTANT'])" nz-menu-item nzMatchRouter>
+            <a (click)="addInvoice()">New Invoice</a>
+          </li>
+          <li *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" nz-menu-item nzMatchRouter>
+            <a (click)="addCompany()">New Company</a>
+          </li>
+          <li *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" nz-menu-item nzMatchRouter>
+            <a (click)="addUser()">New User</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header *ngIf="isLoggedIn()">
+      <div class="app-header">
+        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        </span>
+        <span>
+          <button class="ant-btn menu-btn-fth-sf" routerLink="/consultant-list" routerLinkActive="menu-btn-fth-sf-clicked"
+            nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">
+            Consultant List
+            <!-- <i nz-icon nzType="down"></i> -->
+          </button>
+          <!-- <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>1st menu item</li>
+              <li nz-menu-item>2nd menu item</li>
+              <li nz-menu-divider></li>
+              <li nz-menu-item nzDisabled>disabled menu item</li>
+              <li nz-submenu nzTitle="sub menu">
+                <ul>
+                  <li nz-menu-item>3rd menu item</li>
+                  <li nz-menu-item>4th menu item</li>
+                </ul>
+              </li>
+              <li nz-submenu nzDisabled nzTitle="disabled sub menu">
+                <ul>
+                  <li nz-menu-item>3rd menu item</li>
+                  <li nz-menu-item>4th menu item</li>
+                </ul>
+              </li>
+            </ul>
+          </nz-dropdown-menu> -->
+          <nz-button-group>
+            <!-- <button nz-button routerLink="/consultant-list" routerLinkActive="active" nzType="primary">Consultant
+              List</button> -->
+            <button *ngIf="this.roleGuard.doRolesMatch(['ADMIN','CONSULTANT'])" class="ant-btn menu-btn-fth-sf" routerLink="/company-list" routerLinkActive="menu-btn-fth-sf-clicked"
+              nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu" aria-pressed="true">
+              Company List  
+              <!-- <i nz-icon nzType="down"></i> -->
+            </button>
+            <button *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" class="ant-btn menu-btn-fth-sf" routerLink="/invoice-list" routerLinkActive="menu-btn-fth-sf-clicked"
+              nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu">
+              Invoice List
+              <!-- <i nz-icon nzType="down"></i> -->
+            </button>
+
+            <button *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" class="ant-btn menu-btn-fth-sf" routerLink="/user-list" routerLinkActive="menu-btn-fth-sf-clicked"
+              nz-dropdown nzTrigger="hover" [nzDropdownMenu]="menu" aria-pressed="true">
+              User List  
+              <!-- <i nz-icon nzType="down"></i> -->
+            </button>
+
+            
+          </nz-button-group>
+
+          <nz-button-group  style="float:right; margin-right: 4%;">
+            <button nz-button [disabled]="!this.roleGuard.doRolesMatch(['CONSULTANT'])" class="ant-btn menu-btn-fth-sf" routerLink="/consultant-profile" [queryParams]="{ userId:this.storageService.getUser().id,user:true }" routerLinkActive="menu-btn-fth-sf-clicked" >My Profile</button>
+            <button nz-button class="ant-btn menu-btn-fth-sf-only-border" nz-dropdown [nzDropdownMenu]="menu2" nzPlacement="bottomRight">
+              <i nz-icon nzType="user"></i>
+            </button>
+          </nz-button-group>
+        
+          <nz-dropdown-menu #menu2="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>menu2 1st menu item</li>
+              <li nz-menu-item>menu2 2nd menu item</li>
+              <li (click)="this.authenticationService.logout()" nz-menu-item>Logout</li>
+            </ul>
+          </nz-dropdown-menu>
+
+        </span>
+      </div>
+    </nz-header>
+    <nz-content>
+      <div style="height: auto;" class="inner-content">
+        
+        <router-outlet></router-outlet>
+
+
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

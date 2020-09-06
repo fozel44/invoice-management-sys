@@ -1,0 +1,66 @@
+<!-- buraya sağ tarafta x gelecek -->
+<h2 mat-dialog-title>New Company</h2>
+<div class="row">
+
+    <form mat-dialog-content [formGroup]="addCompanyForm" *ngIf="this.addCompanyForm">
+        <h3 style="text-align: center;">Logo Upload</h3>
+        <div class="upload">
+            <app-add-image (res)="addItem($event)"></app-add-image>
+        </div>
+
+        <div>
+            <mat-form-field >
+                <input matInput placeholder="Name" formControlName="name" required="true">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <br>
+                <textarea matInput placeholder="Description" formControlName="description" name="description" id="desc"
+                    cols="30" rows="5" required></textarea>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="Tax Identification Number" formControlName="taxIdentificationNumber">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input required matInput placeholder="Tax Office" formControlName="taxOffice">
+            </mat-form-field>
+        </div>
+        <div>
+            <div>
+                <ngx-intl-tel-input [inputId]="'adsasd'" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                    [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                    [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Turkey" [maxLength]="10"
+                    [tooltipField]="TooltipLabel.Name" [phoneValidation]="true" [separateDialCode]="separateDialCode"
+                    name="phone" formControlName="phone">
+                </ngx-intl-tel-input>
+            </div>
+            <div *ngIf="addCompanyForm.get('phone').invalid && (addCompanyForm.get('phone').dirty || addCompanyForm.get('phone').touched)"
+                class="alert alert-danger">
+                <div *ngIf="addCompanyForm.get('phone').errors.required">
+                    Mobile Phone Number is Required.
+                </div>
+                <div *ngIf="addCompanyForm.get('phone').errors.validatePhoneNumber">
+                    This Phone Number Incorrect
+                </div>
+            </div>
+        </div>
+        <div>
+            <mat-form-field>
+                <textarea required matInput placeholder="Address" formControlName="address" name="address" id="address" cols="30"
+                    rows="5"></textarea>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div >
+    <mat-dialog-actions style="float:right;">
+        <button  class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button [disabled]="addCompanyForm.invalid" class="btn btn-sm color-white mat-raised-button mat-primary  " (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

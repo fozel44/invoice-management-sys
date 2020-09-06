@@ -1,0 +1,117 @@
+<h2 mat-dialog-title>Edit the Consultant</h2>
+<div class="row" *ngIf="editDto">
+    <form mat-dialog-content [formGroup]="editConsultantForm" *ngIf="this.editConsultantForm">
+        <h3 style="text-align: center;">Photo Upload</h3>
+        <div class="upload">
+            <app-add-image (res)="addItem($event)"></app-add-image>
+        </div>
+
+
+
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="First Name" formControlName="firstName">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="last Name" formControlName="lastName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+        </div>
+
+
+        <div *ngIf="editConsultantForm&&this.roleGuard.isUserOrRoles(consultant.user,[''])">
+            <mat-checkbox (change)="eventCheck($event.checked)">Şifre Değiştir
+            </mat-checkbox>
+        </div>
+
+        <div *ngIf="sifreDegissinMi; then sifreDegistir">
+        </div>
+
+        <ng-template #sifreDegistir>
+            <div>
+                <mat-form-field>
+                    <input required matInput type="password" placeholder="Current Password"
+                        formControlName="currentPassword">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input required matInput type="password" placeholder="New Password" formControlName="password">
+                </mat-form-field>
+            </div>
+            <div>
+                <div>
+                    <mat-form-field>
+                        <input id="confirmPass" required matInput type="password" placeholder="Confirm Password"
+                            name="confirmPass" formControlName="confirmPass">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="editConsultantForm.get('confirmPass').invalid && (editConsultantForm.get('confirmPass').dirty || editConsultantForm.get('confirmPass').touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editConsultantForm.get('confirmPass').errors.required">
+                        Confirm Password is Required.
+                    </div>
+                    <div *ngIf="editConsultantForm.get('confirmPass').errors.isMatching==false">
+                        Password isn't Confirmed
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+        <div>
+            <ngx-intl-tel-input [inputId]="'adsasd'" [cssClass]="'custom'" [preferredCountries]="preferredCountries"
+                [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
+                [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                [selectedCountryISO]="CountryISO.Turkey" [maxLength]="15" [tooltipField]="TooltipLabel.Name"
+                [phoneValidation]="true" [separateDialCode]="separateDialCode" name="phone" formControlName="phone">
+            </ngx-intl-tel-input>
+        </div>
+        <div *ngIf="editConsultantForm.get('phone').invalid && (editConsultantForm.get('phone').dirty || editConsultantForm.get('phone').touched)"
+            class="alert alert-danger">
+            <div *ngIf="editConsultantForm.get('phone').errors.required">
+                Mobile Phone Number is Required.
+            </div>
+            <div *ngIf="editConsultantForm.get('phone').errors.validatePhoneNumber">
+                This Phone Number Incorrect
+            </div>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Address" formControlName="address">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Owned Company</mat-label>
+                <mat-select required [(ngValue)]="selectedOwned" formControlName="ownedCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+                <div class="z"> <span class="y">Current : </span><span class="x"> {{selectedOwned.name}}</span></div>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Worked Company</mat-label>
+                <mat-select required [(ngValue)]="selectedWorked" formControlName="workedCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+                <div class="z"> <span class="y">Current : </span><span class="x"> {{selectedWorked.name}}</span></div>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div>
+    <mat-dialog-actions>
+        <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button *ngIf="editConsultantForm" [disabled]="editConsultantForm.invalid"
+            class="btn btn-sm color-white mat-raised-button mat-primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

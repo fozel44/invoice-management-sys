@@ -1,0 +1,47 @@
+<h2 class="h2 text-center mt-3">Company List</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex flex-row mt-2 my-2">
+                <div class="p-2 ">
+                    <input class="form-control" type="text" placeholder="Search a Company" [(ngModel)]="filterText">
+                    <i *ngIf="filterText">
+                        You Searched For <strong>{{filterText}}</strong>
+                    </i>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Tax ID</th>
+                            <th>Tax Office</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let company of companies|companyFilter:filterText">
+                            <td>{{company.name}}</td>
+                            <td>{{company.taxIdentificationNumber}}</td>
+                            <td>{{company.taxOffice}}</td>
+                            <td>{{company.phone.e164Number}}</td>
+                            <td>{{company.address}}</td>
+                            <td>
+                                <button title="Show Profile" class="edit-button" routerLink="/company-profile"
+                                    [queryParams]="{ companyId: company.id }" nz-button nzType="primary"><i nz-icon
+                                        nzType="file-search" ></i></button>
+                                <!-- <button class="edit-button" routerLink="/invoice-list"
+                                    [queryParams]="{ companyId: company.id ,allInvoiceListByCompanyId : true }"
+                                    *ngIf="this.roleGuard.isUserOrRoles(invoice.consultant.user,['ADMIN'])" nz-button
+                                    nzType="primary"><i nz-icon nzType="file-search" title="Show Invoices"></i></button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

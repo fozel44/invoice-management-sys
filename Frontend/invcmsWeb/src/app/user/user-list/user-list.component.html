@@ -1,0 +1,43 @@
+<h2 class="h2 text-center mt-3">User List</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex flex-row mt-2 my-2">
+                <div class="p-2 ">
+                    <input class="form-control" type="text" placeholder="Search a User" [(ngModel)]="filterText">
+                    <i *ngIf="filterText">
+                        You Searched For <strong>{{filterText}}</strong>
+                    </i>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>E-Mail</th>
+                            <th>Roles</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users|userFilter:filterText">
+                            <td>{{user.firstName}}</td>
+                            <td>{{user.lastName}}</td>
+                            <td>{{user.email}}</td>
+                            <td><em *ngFor="let role of user.roles">{{ role.name |roleDeletePrefix}}, </em></td>
+                            <td>
+                                <span>
+                                    <button *ngIf="this.roleGuard.isUserOrRoles(user,['ADMIN'])" title="Edit User" class="edit-button"
+                                        (click)="editUser(user)" nz-button nzType="primary"><i nz-icon nzType="edit"
+                                            ></i></button>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

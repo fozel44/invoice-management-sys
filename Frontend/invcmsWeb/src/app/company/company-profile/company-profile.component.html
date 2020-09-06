@@ -1,0 +1,87 @@
+<div nz-row class="company-row">
+    <div nz-col nzFlex="2"><button *ngIf="company" [disabled]="!isEditEnable" class="edit-button" nz-button nzType="primary" (click)="editCompany(company)"><i
+                nz-icon nzType="edit"></i>Edit</button>
+    </div>
+    <div nz-col nzFlex="3">
+        <h1>Company Profile</h1>
+    </div>
+</div>
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzSpan]="8" *ngIf="company">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Name :<span class="tr-company">{{company.name}}</span></td>
+                </tr>
+                <tr>
+                    <td>TIN :<span class="tr-company">{{company.taxIdentificationNumber}}</span></td>
+                </tr>
+                <tr>
+                    <td>Tax Office :<span class="tr-company">{{company.taxOffice}}</span></td>
+                </tr>
+                <tr>
+                    <td>Phone :<span class="tr-company">{{company.phone.e164Number}}</span></td>
+                </tr>
+                <tr>
+                    <td>Address :<span class="tr-company">{{company.address}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div nz-col [nzSpan]="8" *ngIf="company">
+        <div class="logo">
+            <img [src]=" company.logo |src | async " alt="{{company.name}} Logo"><!-- Burası DomSanitizer ile SafeURL getirmeye yarıyor
+                                                                                       <img [src]=""> != <img src="">
+                                                                                       soldakinde değişkeni kıvırcık parantezsiz kullanırız.
+                                                                                -->
+        </div>
+        <div class="company-description">
+            <h2 *ngIf="company">{{company.name}}</h2>
+            <p>{{company.description}}</p>
+        </div>
+    </div>
+    <div nz-col [nzSpan]="8" *ngIf="consultantList">
+        <nz-list nzBordered nzHeader="Steaves">
+            <nz-list-item *ngFor="let item of consultantList">
+                <span nz-typography>Name</span>
+                <strong>{{ item.user.firstName }}</strong>
+            </nz-list-item>
+        </nz-list>
+    </div>
+</div>
+<nz-divider class="divider"></nz-divider>
+<div nz-row *ngIf="company&&isEditEnable">
+    <span>
+        <nz-radio-group class="radio" [(ngModel)]="radioValue" nzButtonStyle="solid">
+            <label nz-radio-button nzValue="allInvoices" *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" >All</label>
+            <label  nz-radio-button nzValue="ownerInvoices">Owner</label>
+            <label  nz-radio-button nzValue="remoteInvoices" *ngIf="this.roleGuard.doRolesMatch(['ADMIN'])" >Remote</label>
+        </nz-radio-group>
+    </span>
+    <div *ngIf="radioValue=='ownerInvoices'; then ownerInvoicesTmp;">
+    </div>
+    <div *ngIf="radioValue=='remoteInvoices'; then remoteInvoicesTmp;">
+    </div>
+    <div *ngIf="radioValue=='allInvoices'; then allInvoicesTmp;">
+    </div>
+    <ng-template #ownerInvoicesTmp>
+        <app-invoice-list nz-col [nzSpan]="24" [companyId]="company.id" [doNotListConsultants]="true"
+            [ownerInvoiceListByCompanyId]="true">
+        </app-invoice-list>
+    </ng-template>
+    <ng-template #allInvoicesTmp>
+        <app-invoice-list nz-col [nzSpan]="24" [companyId]="company.id" [doNotListConsultants]="true"
+            [allInvoiceListByCompanyId]="true">
+        </app-invoice-list>
+    </ng-template>
+    <ng-template #remoteInvoicesTmp>
+        <app-invoice-list nz-col [nzSpan]="24" [companyId]="company.id" [doNotListConsultants]="true"
+            [remoteInvoiceListByCompanyId]="true">
+        </app-invoice-list>
+    </ng-template>
+</div>

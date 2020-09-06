@@ -1,0 +1,77 @@
+<h2 mat-dialog-title>Edit the Invoice</h2>
+<div class="row" *ngIf="this.editDto">
+    <form mat-dialog-content [formGroup]="editInvoiceForm" *ngIf="this.editInvoiceForm">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Month</mat-label>
+                <mat-select required [(ngValue)]="selectedMonth" formControlName="month">
+                    <mat-option *ngFor="let m of months" [value]="m">{{m}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Year</mat-label>
+                <mat-select required [(ngValue)]="selectedYear" formControlName="year">
+                    <mat-option *ngFor="let y of years()" [value]="y">{{y}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Amount" formControlName="amount">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Owner Company</mat-label>
+                <mat-select required [(ngValue)]="selectedOwner" formControlName="ownerCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+                <div class="z"> <span class="y">Current : </span><span class="x"> {{selectedOwner.name}}</span></div>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Remote Company</mat-label>
+                <mat-select required [(ngValue)]="selectedRemote" formControlName="remoteCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+                <div class="z"> <span class="y">Current : </span><span class="x"> {{selectedRemote.name}}</span></div>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Consultant</mat-label>
+                <mat-select required [(ngValue)]="selectedConsultant" formControlName="consultant">
+                    <mat-option *ngFor="let c of consultantList" [value]="c">{{c.user.firstName}}</mat-option>
+                </mat-select>
+                <div class="z"> <span class="y">Current : </span><span class="x">
+                        {{selectedConsultant.user.firstName}}</span>
+                </div>
+            </mat-form-field>
+        </div>
+        <div class="u">
+            <div>
+                <h3 style="text-align: center;">Pdf Upload</h3>
+                <div class="upload">
+                    <app-add-pdf (res)="addPdf($event)"></app-add-pdf>
+                </div>
+            </div>
+            <div>
+                <h3 style="text-align: center;">Timesheet Upload</h3>
+                <div class="upload">
+                    <app-add-pdf (res)="addTimesheet($event)"></app-add-pdf>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <mat-dialog-actions>
+        <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button *ngIf="this.editInvoiceForm" [disabled]="editInvoiceForm.invalid"
+            class="btn btn-sm color-white mat-raised-button mat-primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>

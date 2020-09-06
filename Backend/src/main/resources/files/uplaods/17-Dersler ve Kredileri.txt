@@ -1,0 +1,24 @@
+Dersler			Kredi		Bulunduğu Yıl
+-----------------------------------------------------
+Elektronik Lab.		1.5		2 	*
+-----------------------------------------------------
+Toplam			1.5
+
+İşletim Sistemleri	4		3	*  ++
+Bilgisayar Mimarisi	3		3	*  ++
+Veri Tabanı Yönetimi 	3		3	*  ++
+Sayısal Çözümleme	3		3	*
+Yazılım Mühendisliği  	3		3 	*	veya Java ile Programlama
+Mesleki İngilizce	2		3	*
+-----------------------------------------------------
+Toplam			18		3
+
+Mesleki Deneyim -I	0		4	*
+İnkılap Tarihi		2		4		PS: Uzaktan Eğitim
+Yapay Zeka 		3		4	*  ++
+Yapay Sinir Ağları 	3		4	*  ++
+Ağ Programlama 		3		4	*  ++
+-----------------------------------------------------
+Toplam			9
+
+Genel Toplam		40.5		:(

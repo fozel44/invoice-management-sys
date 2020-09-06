@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>New Invoice</h2>
+<div class="row">
+    <mat-dialog-content [formGroup]="addInvoiceForm" *ngIf="this.addInvoiceForm">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Month</mat-label>
+                <mat-select required [(ngModel)]="selectedMonth" formControlName="month">
+                    <mat-option *ngFor="let m of months" [value]="m">{{m}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Year</mat-label>
+                <mat-select required [(ngModel)]="selectedyear" formControlName="year">
+                    <mat-option *ngFor="let y of years()" [value]="y">{{y}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput type="number" placeholder="Amount" formControlName="amount">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Owner Company</mat-label>
+                <mat-select required [(ngModel)]="selectedOwner" formControlName="ownerCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Remote Company</mat-label>
+                <mat-select required [(ngModel)]="selectedRemote" formControlName="remoteCompany">
+                    <mat-option *ngFor="let c of companyList" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label> Consultant</mat-label>
+                <mat-select required [(ngModel)]="selectedConsultant" formControlName="consultant">
+                    <mat-option *ngFor="let c of consultantList" [value]="c">{{c.user.firstName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="x">
+        <div>
+            <h3 style="text-align: center;">Pdf Upload</h3>
+            <div class="upload">
+                <app-add-pdf (res)="addPdf($event)"></app-add-pdf>
+            </div>
+        </div>
+        <div>
+            <h3 style="text-align: center;">Timesheet Upload</h3>
+            <div class="upload">
+                <app-add-pdf (res)="addTimesheet($event)"></app-add-pdf>
+            </div>
+        </div>
+    </div>
+
+
+    </mat-dialog-content>
+</div>
+
+<mat-dialog-actions class="float-right">
+    <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+    <button *ngIf="this.addInvoiceForm" [disabled]="!(addInvoiceForm.valid&&isPulledPdf&&isPulledTimesheet)" class="btn btn-sm color-white mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>

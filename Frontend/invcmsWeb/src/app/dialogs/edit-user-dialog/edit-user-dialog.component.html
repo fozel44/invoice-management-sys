@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Edit the User</h2>
+<div class="row">
+    <form mat-dialog-content [formGroup]="editUserForm" *ngIf="this.editUserForm">
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="First Name" formControlName="firstName">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="last Name" formControlName="lastName">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email">
+            </mat-form-field>
+        </div>
+
+        <div *ngIf="editUserForm&&this.roleGuard.isUserOrRoles(user,[''])">
+            <mat-checkbox (change)="eventCheck($event.checked)">Şifre Değiştir
+            </mat-checkbox>
+        </div>
+
+        <div *ngIf="sifreDegissinMi; then sifreDegistir">
+        </div>
+        <ng-template #sifreDegistir>
+            <div>
+                <mat-form-field>
+                    <input required matInput type="password" placeholder="Current Password"
+                        formControlName="currentPassword">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input required matInput type="password" placeholder="New Password" formControlName="password">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input id="confirmPass" required matInput type="password" placeholder="Confirm Password"
+                        name="confirmPass" formControlName="confirmPass">
+                </mat-form-field>
+                <div *ngIf="editUserForm.get('confirmPass').invalid && (editUserForm.get('confirmPass').dirty || editUserForm.get('confirmPass').touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editUserForm.get('confirmPass').errors.required">
+                        Confirm Password is Required.
+                    </div>
+                    <div *ngIf="editUserForm.get('confirmPass').errors.isMatching==false">
+                        Password isn't Confirmed
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+
+    </form>
+</div>
+
+<div>
+    <mat-dialog-actions>
+        <button class="btn btn-sm mat-raised-button " (click)="close()">Close</button>
+        <button *ngIf="editUserForm" [disabled]="editUserForm.invalid"
+            class="btn btn-sm color-white mat-raised-button mat-primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+</div>
