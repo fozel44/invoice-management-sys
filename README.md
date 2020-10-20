@@ -1,17 +1,23 @@
 # Invoice Management System
 
- Bu uygulama bir web arayüzü aracılığıyla uygulamayı kullanan yönetici ve çalışanların aylık faturalandırma işlemlerinin takibi amacıyla yapılmış projenin public beta versiyonudur.
- Uygulamayı kullanan yönetici, hesabına giriş yaptıktan sonra sisteme yeni çalışanlar veya farklı röllerde ve yetkilerde kullanıcılar kaydedebilir.
- Çalışanlar ise her ay dönümlerinde sisteme kestikleri faturanın dökümanını ve detaylarını upload eder.
- Yönetici bu ayda, o çalışan için kiralanan firmaya fatura keser ve aynı şekilde sisteme girer.
- Sistem faturaların yanı sıra zaman çizelgelerini de barındırır ve SLA almaya olanak sağlar.
+   Bu uygulama bir web arayüzü aracılığıyla uygulamayı kullanan yönetici ve çalışanların aylık faturalandırma işlemlerinin takibi amacıyla yapılmış bir
+ projenin public beta versiyonudur.
+ 
+   Uygulamayı kullanan yönetici, hesabına giriş yaptıktan sonra sisteme yeni çalışanlar veya farklı röllerde ve yetkilerde kullanıcılar kaydedebilir.
+   
+   Çalışanlar ise her ay dönümlerinde sisteme kestikleri faturanın dökümanını ve detaylarını upload eder.
+   
+   Yönetici bu ayda, o çalışan için kiralanan firmaya fatura keser ve aynı şekilde sisteme girer.
+   
+   Sistem faturaların yanı sıra zaman çizelgelerini de barındırır ve SLA almaya olanak sağlar.
  
 ## Başlarken
 
 Uygulamayı kendi local bilgisayarınızda çalıştırmak için izlemeniz gereken yol aşağıda belirtilmiştir.
+
 ### Ön Koşullar
 
-What things you need to install the software and how to install them
+Uygulama kurulumu çncesinde aşağıdaki kurulumları yapınız.
 
 ```
 Java 11
@@ -23,9 +29,10 @@ OpenJDK 14+
 ### Kurulum
 
 Kurulumun tamamlanması ve çalışan ortamın bilgisayarınızda ayağa kaldırılması için ön koşulları sağladığınızdan emin olun.
+
 Kurulum için gereken adımar aşağıda sıralanmıştır.
 
-Proje dosyalarıni git clone ile aldıktan sonra terminalde frontend klasörünün içerisinde aşağıdaki komutu çalıştırın.
+Proje dosyalarıni git clone ile aldıktan sonra terminalde frontend>invcms klasörünün içerisinde aşağıdaki komutu çalıştırın.
 
 ```
 npm install
@@ -51,12 +58,22 @@ Terminal üzerinde ilgili dizinde aşağıdaki komutu çalıştırın.
 javac -jar dosyaadı.jar
 ```
 
-Varsayılan olarak localhost://8080 portunda backend
-localhost:4200 portunda da frontend çalışır hale gelmiş olmalıdır.
-localhost:4200 portuna tarayıcınızdan erişerek uygulamayı kullanabilirsiniz.
-Varsayılan yönetici kullanıcı adı = test@test.com
-							  şifre= test
+Varsayılan olarak localhost://8080 portunda backend,
 
+localhost:4200 portunda da frontend çalışır hale gelmiş olmalıdır.
+
+aşağıdaki linke tarayıcınızdan erişerek uygulamayı kullanabilirsiniz.
+
+```
+http://localhost:4200
+```
+
+Varsayılan yönetici girişi
+
+```
+id: 	test@test.com
+şifre:  test
+```
 
 ## Built With
 
