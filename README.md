@@ -23,7 +23,6 @@ Java 11
 Angular 10+
 npm 6+
 OpenJDK 14+
-MariaDB
 ```
 
 ### installation
