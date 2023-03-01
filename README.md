@@ -1,74 +1,74 @@
 # Invoice Management System
 
-   Bu uygulama bir web arayüzü aracılığıyla uygulamayı kullanan yönetici ve çalışanların aylık faturalandırma işlemlerinin takibi amacıyla yapılmış bir
- projenin public beta versiyonudur.
+   This application is the public beta version of a project made to monitor the monthly invoicing processes of the managers and employees using the application via a     web interface.
  
-   Uygulamayı kullanan yönetici, hesabına giriş yaptıktan sonra sisteme yeni çalışanlar veya farklı röllerde ve yetkilerde kullanıcılar kaydedebilir.
+   The administrator using the application can register new employees or users with different roles and authorizations to the system after logging in to her/his account.
    
-   Çalışanlar ise her ay dönümlerinde sisteme kestikleri faturanın dökümanını ve detaylarını upload eder.
+   Employees, upload the document and details of the invoice they have issued to the system at the turn of the month.
    
-   Yönetici bu ayda, o çalışan için kiralanan firmaya fatura keser ve aynı şekilde sisteme girer.
+   In this month, the manager issues an invoice to the company hired for that employee and enters the system in the same way.
    
-   Sistem faturaların yanı sıra zaman çizelgelerini de barındırır ve SLA almaya olanak sağlar.
+   The system includes invoices as well as time sheets and allows SLA reporting.
  
-## Başlarken
+## While Starting
 
-Uygulamayı kendi local bilgisayarınızda çalıştırmak için izlemeniz gereken yol aşağıda belirtilmiştir.
+The steps you need to follow to run the application on your local computer are listed below.
 
-### Ön Koşullar
+### Prerequisites
 
-Uygulama kurulumu çncesinde aşağıdaki kurulumları yapınız.
+Before installing the application, make the following installations.
 
 ```
 Java 11
 Angular 10+
 npm 6+
 OpenJDK 14+
+MariaDB
 ```
 
-### Kurulum
+### installation
 
-Kurulumun tamamlanması ve çalışan ortamın bilgisayarınızda ayağa kaldırılması için ön koşulları sağladığınızdan emin olun.
+Make sure you installed the prerequisites for the installation to complete and the application to run on your computer.
 
-Kurulum için gereken adımar aşağıda sıralanmıştır.
+The steps required for installation are listed below.
 
-Proje dosyalarıni git clone ile aldıktan sonra terminalde frontend>invcms klasörünün içerisinde aşağıdaki komutu çalıştırın.
+After getting the project files with git clone, run the following command in the frontend>invcms folder in the terminal.
 
 ```
 npm install
 ```
 
-Ardından aşağıdaki komut ile arayüzü ayağa kaldırın.
+Then run the interface with the following command.
 
 ```
 ng serve --open
 ```
 
-Bu aşamada projenin frontendi çalışır hale geldikten sonra backend klasöründe aşağıdaki komutu çalıştırın
+At this stage, after the frontend of the project is running, run the following command in the backend folder
  
 ```
 mvn clean install
 ```
 
-Ardından backend kaynak kodlarının içerisinde oluşan target klasöründen jar dosyanızın ismini ve yolunu alın.
+Then get the name and path of the jar file from the target folder created in the backend source codes.
 
-Terminal üzerinde ilgili dizinde aşağıdaki komutu çalıştırın.
+Run the following command in the relevant directory on the terminal.
 
 ```
-javac -jar dosyaadı.jar
+javac -jar filename.jar
 ```
 
-Varsayılan olarak localhost://8080 portunda backend,
+By default the backend is on localhost:8080 port
 
-localhost:4200 portunda da frontend çalışır hale gelmiş olmalıdır.
+The frontend should also be running on the localhost:4200 port.
 
-aşağıdaki linke tarayıcınızdan erişerek uygulamayı kullanabilirsiniz.
+You can use the application by accessing it from your browser using the following path.
 
 ```
 http://localhost:4200
 ```
 
-Varsayılan yönetici girişi
+Default admin login
 
 ```
 id: 	test@test.com
